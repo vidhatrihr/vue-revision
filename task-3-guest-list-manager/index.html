@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 3: Guest List Manager</title>
+    <script src="https://unpkg.com/vue@3.5.27/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <main id="app">
+      <h1>Task 3: Guest List Manager</h1>
+      <form @submit.prevent="addGuest">
+        <label>
+          New Guest:
+          <input type="text" v-model="newGuestName" placeholder="Enter guest name" />
+        </label>
+        <button>Add Guest</button>
+      </form>
+
+      <ul>
+        <li v-for="(guest, index) in guests" :key="index">
+          {{ guest }}
+          <button @click="removeGuest(index)">remove</button>
+        </li>
+      </ul>
+    </main>
+
+    <script>
+      const options = {
+        data() {
+          return {
+            newGuestName: '',
+            guests: ['rahul', 'vidu'],
+          };
+        },
+
+        methods: {
+          removeGuest(id) {
+            this.guests.splice(id, 1);
+          },
+
+          addGuest() {
+            this.guests.push(this.newGuestName);
+          },
+        },
+      };
+
+      const app = Vue.createApp(options);
+      app.mount('#app');
+    </script>
+  </body>
+</html>

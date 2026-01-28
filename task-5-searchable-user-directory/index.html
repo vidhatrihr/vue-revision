@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 5: Searchable User Directory</title>
+    <script src="https://unpkg.com/vue@3.5.27/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <main id="app">
+      <h1>Task 5: Searchable User Directory</h1>
+      <input v-model="searchQuery" type="text" placeholder="Search users..." />
+
+      <div>
+        <ul>
+          <li v-for="user in users" :key="user.id">
+            <p>id-{{ user.id }}, {{ user.name }}, {{ user.role }}</p>
+          </li>
+        </ul>
+        <!-- <p v-if="">No user found</p> -->
+      </div>
+    </main>
+
+    <script>
+      const options = {
+        data() {
+          return {
+            searchQuery: '',
+            users: [
+              { id: 1, name: 'Rahul', role: 'Admin' },
+              { id: 2, name: 'Vidu', role: 'Editor' },
+              { id: 3, name: 'Paru', role: 'Viewer' },
+              { id: 4, name: 'Vishnu', role: 'Admin' },
+            ],
+          };
+        },
+
+        computed: {
+          filteredList() {
+            if (!this.searchQuery) return this.users;
+
+            const query = this.searchQuery.toLowerCase();
+
+            return this.users.filter(user => user.toLowerCase().includes(query));
+          },
+        },
+      };
+
+      const app = Vue.createApp(options);
+      app.mount('#app');
+    </script>
+  </body>
+</html>

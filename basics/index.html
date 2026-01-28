@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Revision</title>
+    <script src="https://unpkg.com/vue@3.5.26/dist/vue.global.js"></script>
+    <style>
+      button {
+        margin-right: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="app">
+      <p>
+        My name is {{ name }} ({{ nickEmoji }} {{ nickName}}) and i am {{ age }} years
+        old.
+      </p>
+
+      <div v-if="isTeenager">
+        <p>You are not allowed to drive</p>
+      </div>
+      <div v-else>
+        Choose your car
+        <select v-model="chosenCar">
+          <option value="innova">Innova</option>
+          <option value="ertiga">Ertiga</option>
+          <option value="bmw-m8">BMW-M8</option>
+        </select>
+        <br />
+
+        Choose your color
+        <select v-model="chosenColor">
+          <option value="white">White</option>
+          <option value="black">Black</option>
+          <option value="yellow">Yellow</option>
+          <option value="green">Green</option>
+        </select>
+
+        <p>You have chosen {{ speedCategory }} car, of {{ colorCategory }} color</p>
+      </div>
+
+      <button v-on:click="increaseAge">+ age</button>
+      <button v-on:click="decreaseAge">- age</button>
+
+      <button @click="changeName">Change name</button>
+    </main>
+
+    <script>
+      const options = {
+        data() {
+          return {
+            name: 'rahul',
+            age: 20,
+            chosenCar: 'ertiga',
+            chosenColor: 'white',
+          };
+        },
+
+        computed: {
+          isTeenager() {
+            return this.age < 19;
+          },
+
+          nickName() {
+            if (this.isTeenager) {
+              if (this.name == 'rahul') return 'teen-boy';
+              return 'teen-girl';
+            }
+            if (this.name == 'rahul') return 'man';
+            return 'woman';
+          },
+
+          nickEmoji() {
+            if (this.isTeenager) {
+              return this.name == 'rahul' ? '👦' : '👧';
+            }
+            return this.name == 'rahul' ? '👨' : '👩';
+          },
+
+          speedCategory() {
+            return this.chosenCar == 'bmw-m8' ? 'fast' : 'slow';
+          },
+
+          colorCategory() {
+            if (this.chosenColor == 'white') return 'boring';
+            return this.chosenColor == 'black' ? 'best' : 'good';
+          },
+        },
+
+        methods: {
+          increaseAge() {
+            this.age++;
+          },
+
+          decreaseAge() {
+            this.age--;
+          },
+
+          changeName() {
+            this.name = this.name == 'rahul' ? 'vidu' : 'rahul';
+          },
+        },
+      };
+      const app = Vue.createApp(options);
+      app.mount('#app');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 4: Dynamic Box</title>
+    <script src="https://unpkg.com/vue@3.5.27/dist/vue.global.js"></script>
+    <style>
+      main {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .child-box {
+        height: 50%;
+        width: 50%;
+        color: white;
+      }
+
+      button {
+        user-select: none;
+        cursor: pointer;
+        margin-right: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="app">
+      <h1>Task 4: Dynamic Box</h1>
+
+      <div>
+        <button @click="rotateLeft">Rotate Left</button>
+        <button @click="rotateRight">Rotate Right</button>
+
+        <button @click="grow">Grow</button>
+        <button @click="shrink">Shrink</button>
+      </div>
+
+      <div class="box" :style="boxStyle">
+        <div class="child-box" style="background-color: green">1</div>
+        <div class="child-box" style="background-color: darkgoldenrod">2</div>
+        <div class="child-box" style="background-color: blue">3</div>
+        <div class="child-box" style="background-color: purple">4</div>
+      </div>
+      <p v-if="(size == 50)">Size cannot be reduced below 50 pixel</p>
+    </main>
+
+    <script>
+      const options = {
+        data() {
+          return {
+            rotation: 0,
+            size: 70,
+          };
+        },
+
+        computed: {
+          boxStyle() {
+            return {
+              height: `${this.size}px`,
+              width: `${this.size}px`,
+              transform: `rotate(${this.rotation}deg)`,
+              border: '1px solid black',
+              display: 'flex',
+              flexWrap: 'wrap',
+            };
+          },
+        },
+
+        methods: {
+          rotateLeft() {
+            this.rotation -= 45;
+          },
+
+          rotateRight() {
+            this.rotation += 45;
+          },
+
+          shrink() {
+            if (this.size > 50) {
+              this.size -= 5;
+            }
+          },
+
+          grow() {
+            this.size += 5;
+          },
+        },
+      };
+      const app = Vue.createApp(options);
+      app.mount('#app');
+    </script>
+  </body>
+</html>
