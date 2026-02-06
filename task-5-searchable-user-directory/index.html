@@ -13,11 +13,11 @@
 
       <div>
         <ul>
-          <li v-for="user in users" :key="user.id">
+          <li v-for="user in filteredUsers" :key="user.id">
             <p>id-{{ user.id }}, {{ user.name }}, {{ user.role }}</p>
           </li>
         </ul>
-        <!-- <p v-if="">No user found</p> -->
+        <p v-if="filteredUsers.length == 0">No user found</p>
       </div>
     </main>
 
@@ -36,12 +36,12 @@
         },
 
         computed: {
-          filteredList() {
+          filteredUsers() {
             if (!this.searchQuery) return this.users;
 
             const query = this.searchQuery.toLowerCase();
 
-            return this.users.filter(user => user.toLowerCase().includes(query));
+            return this.users.filter(user => user.name.toLowerCase().includes(query));
           },
         },
       };
