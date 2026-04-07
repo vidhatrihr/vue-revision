@@ -8,14 +8,10 @@ console.log(tipPercent);
 
 const tipAmount = computed(() => (billAmount.value * tipPercent.value) / 100);
 const totalAmount = computed(() => billAmount.value + tipAmount.value);
-const perPerson = computed(() => (totalAmount.value / numOfPeople.value).toFixed(2));
-
-const showEmpty = () => {
-  if (numOfPeople.value == 0 || billAmount.value == 0) {
-    numOfPeople.value = '-';
-    billAmount.value = '-';
-  }
-};
+const perPerson = computed(() => {
+  if (numOfPeople.value == 0 || billAmount.value == 0) return '-';
+  return (totalAmount.value / numOfPeople.value).toFixed(2);
+});
 </script>
 
 <template>

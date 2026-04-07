@@ -4,7 +4,7 @@ import { ref, computed } from 'vue';
 const height = ref(150); // cm
 const weight = ref(60); // kg
 
-const bmi = computed(() => (weight.value / (height.value / 100) ** 2).toFixed(2));
+const bmi = computed(() => weight.value / (height.value / 100) ** 2);
 
 const bmiCategory = computed(() => {
   if (bmi.value < 18.5) return 'UnderWeight';
@@ -28,8 +28,8 @@ const bmiCategory = computed(() => {
       </label>
     </form>
 
-    <div>BMI: {{ bmi }}</div>
-    <div :class="`${bmiCategory}`">Category: {{ bmiCategory }}</div>
+    <div>BMI: {{ bmi.toFixed(2) }}</div>
+    <div :class="bmiCategory">Category: {{ bmiCategory }}</div>
   </div>
 </template>
 
